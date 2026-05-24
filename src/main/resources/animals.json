@@ -1,0 +1,26 @@
+[
+  {
+    "petType": "Dog",
+    "availableSizing": [
+      "small",
+      "medium",
+      "large"
+    ],
+    "services": [
+      {
+        "name": "Hair Cut",
+        "price": {
+          "small": 15.00,
+          "medium": 35.00,
+          "large": 50.00
+        }
+      }
+    ],
+    "addons": [
+      {
+        "name": "nail trim",
+        "price": 10
+      }
+    ]
+  }
+]
