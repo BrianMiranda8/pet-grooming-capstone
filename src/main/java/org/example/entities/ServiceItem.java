@@ -4,5 +4,5 @@ import java.util.Map;
 
 public record ServiceItem(
         String name,
-        Map<String,Double> services
+        Map<String,Double> price
 ) { }

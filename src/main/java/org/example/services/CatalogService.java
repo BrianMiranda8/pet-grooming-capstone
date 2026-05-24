@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
 import org.example.interfaces.AnimalRepository;
 import org.example.models.Catalog;
@@ -31,7 +32,7 @@ public class CatalogService {
         return this.getCatalog(petType).getServices();
     }
 
-    public List<String> getAvailableSizing(String petType)  {
+    public List<String> getAvailableSizing(String petType) {
         return getCatalog(petType).getAvailableSizing();
     }
 
@@ -43,7 +44,18 @@ public class CatalogService {
         return this.catalogs.stream()
                 .filter(c -> c.getPetType().equalsIgnoreCase(petType))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No pet type found of type"+ petType));
+                .orElseThrow(() -> new IllegalArgumentException("No pet type found of type" + petType));
+    }
+
+    public AppointmentItem getServiceItem(String petType, String size, String name) {
+        return this.getCatalog(petType).getServices().stream()
+                .filter(si -> si.name().equals(name))
+                .filter(si -> si.price().containsKey(size))
+                .map(c -> new AppointmentItem(c.name(), c.price().get(size), 1))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No service item found for name '" + name + "' and size '" + size + "'"
+                ));
     }
 
 }

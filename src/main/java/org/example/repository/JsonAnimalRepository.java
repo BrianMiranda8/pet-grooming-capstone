@@ -11,8 +11,6 @@ import java.util.List;
 public class JsonAnimalRepository implements AnimalRepository {
     List<Catalog> catalogs;
 
-
-
     @Override
     public List<Catalog> getCatalogs() {
         return catalogs;

@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
 import org.example.interfaces.AnimalRepository;
 import org.example.repository.JsonAnimalRepository;
@@ -45,5 +46,14 @@ class CatalogServiceTest {
         ServiceItem serviceItem = serviceItems.getFirst();
         Assertions.assertEquals("Hair Cut", serviceItem.name(), "serviceItems should contain De-shedding Treatment");
         serviceItems.forEach(si -> Assertions.assertNotNull(si, "serviceItems should not be null"));
+    }
+
+    @Test
+    void get_service_item_by_name(){
+        var appointmentItem = catalogService.getServiceItem("Cat", "small", "Hair Cut");
+
+        Assertions.assertNotNull(appointmentItem, "appointmentItem should not be null");
+        Assertions.assertEquals("Hair Cut", appointmentItem.name(), "serviceItems should contain hair cut");
+//        Assertions.assertEquals(15.00, appointmentItem.price(), "serviceItems price should be 15.00");
     }
 }
