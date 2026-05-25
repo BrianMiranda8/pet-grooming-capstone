@@ -14,12 +14,88 @@
           "medium": 35.00,
           "large": 50.00
         }
+      },
+      {
+        "name": "Bath & Brush",
+        "price": {
+          "small": 20.00,
+          "medium": 30.00,
+          "large": 45.00
+        }
+      },
+      {
+        "name": "De-shedding Treatment",
+        "price": {
+          "small": 25.00,
+          "medium": 45.00,
+          "large": 65.00
+        }
       }
     ],
     "addons": [
       {
-        "name": "nail trim",
-        "price": 10
+        "name": "Nail Trim",
+        "price": 10.00
+      },
+      {
+        "name": "Teeth Brushing",
+        "price": 12.00
+      },
+      {
+        "name": "Ear Cleaning",
+        "price": 8.00
+      },
+      {
+        "name": "Oatmeal Shampoo Upgrade",
+        "price": 5.00
+      }
+    ]
+  },
+  {
+    "petType": "Cat",
+    "availableSizing": [
+      "small",
+      "medium",
+      "large"
+    ],
+    "services": [
+      {
+        "name": "Hair Cut",
+        "price": {
+          "small": 15.00,
+          "medium": 35.00,
+          "large": 50.00
+        }
+      },
+      {
+        "name": "Bath & Brush",
+        "price": {
+          "small": 25.00,
+          "medium": 35.00,
+          "large": 45.00
+        }
+      },
+      {
+        "name": "Flea & Tick Bath",
+        "price": {
+          "small": 30.00,
+          "medium": 45.00,
+          "large": 55.00
+        }
+      }
+    ],
+    "addons": [
+      {
+        "name": "Nail Trim",
+        "price": 10.00
+      },
+      {
+        "name": "Ear Cleaning",
+        "price": 8.00
+      },
+      {
+        "name": "Soft Claws Application",
+        "price": 15.00
       }
     ]
   }

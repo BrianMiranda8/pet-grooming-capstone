@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Transaction {
     LocalDateTime transactionDate = LocalDateTime.now();
+    String petType;
     String petName;
     String ownerName;
     String ownerEmail;
@@ -27,6 +28,14 @@ public class Transaction {
         this.addons = addons;
         this.items = items;
 
+    }
+
+    public String getPetType() {
+        return petType;
+    }
+
+    public void setPetType(String petType) {
+        this.petType = petType;
     }
 
     public Transaction() {
@@ -87,7 +96,7 @@ public class Transaction {
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
 
-        StringBuilder title = new  StringBuilder();
+        StringBuilder title = new StringBuilder();
         StringBuilder sb = new StringBuilder();
 
         title.append("Hippy Hounds Receipt \n");

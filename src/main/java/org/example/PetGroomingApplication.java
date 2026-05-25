@@ -1,8 +1,13 @@
 package org.example;
 
+import org.example.controllers.MainController;
+
 public class PetGroomingApplication {
 
      static void main(){
-        System.out.println("Hello World!");
+
+         MainController mainController = new MainController();
+         mainController.displayScreen();
+
     }
 }
