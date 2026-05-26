@@ -17,6 +17,7 @@ public class Transaction {
     String petName;
     String ownerName;
     String ownerEmail;
+    String petSizing;
     List<AppointmentAddon> addons = new ArrayList<>();
     List<AppointmentItem> items = new ArrayList<>();
     double totalAmount;
@@ -28,6 +29,14 @@ public class Transaction {
         this.addons = addons;
         this.items = items;
 
+    }
+
+    public String getPetSizing() {
+        return petSizing;
+    }
+
+    public void setPetSizing(String petSizing) {
+        this.petSizing = petSizing;
     }
 
     public String getPetType() {

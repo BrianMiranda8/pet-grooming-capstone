@@ -47,7 +47,7 @@ public class CatalogService {
                 .orElseThrow(() -> new IllegalArgumentException("No pet type found of type" + petType));
     }
 
-    public AppointmentItem getServiceItem(String petType, String size, String name) {
+    public AppointmentItem getAppointmentItem(String petType, String size, String name) {
         return this.getCatalog(petType).getServices().stream()
                 .filter(si -> si.name().equals(name))
                 .filter(si -> si.price().containsKey(size))
@@ -57,5 +57,11 @@ public class CatalogService {
                         "No service item found for name '" + name + "' and size '" + size + "'"
                 ));
     }
+
+    public AppointmentItem getAppointmentItem(String petType, String petSizing, int id) {
+        ServiceItem serviceItem = this.getCatalog(petType).getServices().get(id);
+        return new AppointmentItem(serviceItem.name(), serviceItem.price().get(petSizing), 1 );
+    }
+
 
 }

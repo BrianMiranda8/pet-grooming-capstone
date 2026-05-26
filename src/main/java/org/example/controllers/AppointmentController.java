@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
 import org.example.frontend.UI;
 import org.example.interfaces.AnimalRepository;
@@ -8,6 +9,7 @@ import org.example.models.Transaction;
 import org.example.repository.JsonAnimalRepository;
 import org.example.services.CatalogService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentController implements ControllerInterface {
@@ -21,15 +23,19 @@ public class AppointmentController implements ControllerInterface {
 
         while (appointmentLoop) {
             try {
-                //todo show exit message
-                selectPet(catalogService, transaction);
-
-                List<String> availableSizing = catalogService.getAvailableSizing(transaction.getPetType());
-
-                Integer selectedSizing = selectPetSizing(availableSizing);
-                
-//                List<TransactionS> selectedServices = selectServices(catalogService, transaction, availableSizing);
-
+                /**
+                 * Get pet type
+                 * Get pet size
+                 * get user name
+                 * get user email
+                 * get user phone number
+                 * get services
+                 *  - when selecting a service dont display it again
+                 * get add ons
+                 * get
+                 */
+//                String petType = selectPetType(catalogService);
+//                String petSize = selectPetSize(catalogService);
 
             } catch (NumberFormatException e) {
                 UI.showMessage("Invalid input try again!");
@@ -39,45 +45,12 @@ public class AppointmentController implements ControllerInterface {
         }
     }
 
-    private static String selectServices(CatalogService catalogService, Transaction transaction, List<String> availableSizing) {
-        UI.showMessage("");
-        UI.showMessage("");
+//    private String selectPetSize(CatalogService catalogService) {
+//    }
+//
+//    private String selectPetType(CatalogService catalogService) {
+//    }
 
-        UI.showMessage("Services:");
-
-        List<ServiceItem> serviceItems = catalogService.getServiceItems(transaction.getPetType());
-        for (int i = 0; i < serviceItems.size(); i++) {
-            ServiceItem serviceItem = serviceItems.get(i);
-            UI.showMessage(i + ") " + serviceItem.name() + " $" + serviceItem.price().get(availableSizing.get(i)));
-        }
-
-        return UI.showPrompt("Select Service: ");
-    }
-
-    private Integer selectPetSizing(List<String> availableSizing) {
-        for (int i = 0; i < availableSizing.size(); i++) {
-            UI.showMessage(i + ") " + availableSizing.get(i));
-        }
-        int petSizingResponse = Integer.parseInt(UI.showPrompt("Please select your sizing: "));
-        if (petSizingResponse + 1 > availableSizing.size()) {
-            throw new RuntimeException("Invalid Option");
-        }
-        return petSizingResponse;
-    }
-
-    private void selectPet(CatalogService catalogService, Transaction transaction) {
-        List<String> options = catalogService.getCatalogNames();
-        UI.showMessage("Select Your Pet");
-
-        for (int i = 0; i < options.size(); i++) {
-            UI.showMessage(i + ") " + options.get(i));
-        }
-
-        String animalTypeResponse = UI.showPrompt("Please select an option: ");
-        exitCondition(animalTypeResponse);
-        int animalType = Integer.parseInt(animalTypeResponse);
-        transaction.setPetType(options.get(animalType));
-    }
 
     private void exitCondition(String condition) {
         String terminalCondition = "exit";

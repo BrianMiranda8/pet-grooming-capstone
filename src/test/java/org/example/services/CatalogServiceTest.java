@@ -1,6 +1,5 @@
 package org.example.services;
 
-import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
 import org.example.interfaces.AnimalRepository;
 import org.example.repository.JsonAnimalRepository;
@@ -50,7 +49,7 @@ class CatalogServiceTest {
 
     @Test
     void get_service_item_by_name(){
-        var appointmentItem = catalogService.getServiceItem("Cat", "small", "Hair Cut");
+        var appointmentItem = catalogService.getAppointmentItem("Cat", "small", "Hair Cut");
 
         Assertions.assertNotNull(appointmentItem, "appointmentItem should not be null");
         Assertions.assertEquals("Hair Cut", appointmentItem.name(), "serviceItems should contain hair cut");
