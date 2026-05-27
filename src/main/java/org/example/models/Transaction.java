@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Transaction {
     LocalDateTime transactionDate = LocalDateTime.now();
@@ -18,17 +20,24 @@ public class Transaction {
     String ownerName;
     String ownerEmail;
     String petSizing;
-    List<AppointmentAddon> addons = new ArrayList<>();
-    List<AppointmentItem> items = new ArrayList<>();
-    double totalAmount;
+    HashMap<String, AppointmentAddon> addons = new HashMap<>();
+    HashMap<String, AppointmentItem> items = new HashMap<>();
 
-    public Transaction(String petName, String ownerName, String ownerEmail, List<AppointmentAddon> addons, List<AppointmentItem> items) {
+    public Transaction(String petName, String ownerName, String ownerEmail, HashMap<String,AppointmentAddon> addons, HashMap<String,AppointmentItem> items) {
         this.petName = petName;
         this.ownerName = ownerName;
         this.ownerEmail = ownerEmail;
         this.addons = addons;
         this.items = items;
 
+    }
+
+    public boolean containsItem(String name){
+        return items.containsKey(name);
+    }
+
+    public boolean containsAddon(String name){
+        return addons.containsKey(name);
     }
 
     public String getPetSizing() {
@@ -56,51 +65,42 @@ public class Transaction {
     }
 
 
-    public String getPetName() {
-        return petName;
-    }
 
     public void setPetName(String petName) {
         this.petName = petName;
     }
 
-    public String getOwnerName() {
-        return ownerName;
-    }
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
 
-    public String getOwnerEmail() {
-        return ownerEmail;
-    }
 
     public void setOwnerEmail(String ownerEmail) {
         this.ownerEmail = ownerEmail;
     }
 
-    public List<AppointmentAddon> getAddons() {
-        return addons;
-    }
 
-    public void setAddons(AppointmentAddon addon) {
+    public void setAddons(String id, AppointmentAddon addon) {
         // todo fix this to add quantity
-        this.addons.add(addon);
-        this.totalAmount += this.addons.stream()
-                .mapToDouble(AppointmentAddon::price).sum();
+        this.addons.put(id,addon);
+
     }
 
     public List<AppointmentItem> getItems() {
-        return items;
+        return items.values().stream().toList();
     }
 
-    public void setItems(AppointmentItem item) {
-        this.items.add(item);
-        this.totalAmount += this.items.stream()
-                .mapToDouble(AppointmentItem::price).sum();
+    public void setItems(String id, AppointmentItem item) {
+        this.items.put(id, item);
     }
 
+    public void removeItem(String id){
+        this.items.remove(id);
+    }
+    public void removeAddon(String id){
+        this.addons.remove(id);
+    }
     @Override
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
@@ -118,11 +118,23 @@ public class Transaction {
 
         sb.insert(0, title);
         sb.append("Services: ").append("\n");
-        this.items.forEach(item -> sb.append(item.toString()));
+        this.items.values().forEach(item -> sb.append(item.toString()));
         sb.append("Addons: ").append("\n");
-        this.addons.forEach(addon -> sb.append(addon.toString()));
-        sb.append("Total:").append(" ".repeat(10)).append(totalAmount).append("\n");
+        this.addons.values().forEach(addon -> sb.append(addon.toString()));
+        sb.append(String.format("%-34s %10.2f","Total:",getTotal() )).append("\n");
 
         return sb.toString();
+    }
+
+    public double getTotal() {
+        double itemsTotal = this.items.values().stream()
+                .mapToDouble(AppointmentItem::price)
+                .sum();
+
+        double addonsTotal = this.addons.values().stream()
+                .mapToDouble(AppointmentAddon::price)
+                .sum();
+
+        return itemsTotal + addonsTotal;
     }
 }

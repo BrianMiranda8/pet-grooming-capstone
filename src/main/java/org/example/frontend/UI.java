@@ -18,4 +18,19 @@ public class UI {
         System.out.print(message);
        return getUserInteraction();
     }
+
+    public static void padding(){
+        UI.showMessage("");
+    }
+
+    public static String createTitle(String title){
+        StringBuilder sb = new StringBuilder();
+        sb.append("-".repeat(title.length() + 4)).append("\n");
+
+        sb.append("| ").append(title).append(" |").append("\n");
+        sb.append("-".repeat(title.length() + 4));
+
+
+        return sb.toString();
+    }
 }

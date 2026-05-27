@@ -1,5 +1,7 @@
 package org.example.services;
 
+import org.example.entities.Addons;
+import org.example.entities.AppointmentAddon;
 import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
 import org.example.interfaces.AnimalRepository;
@@ -24,9 +26,6 @@ public class CatalogService {
                 .toList();
     }
 
-    public List<Catalog> getCatalogs() {
-        return this.catalogs;
-    }
 
     public List<ServiceItem> getServiceItems(String petType) {
         return this.getCatalog(petType).getServices();
@@ -46,6 +45,11 @@ public class CatalogService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No pet type found of type" + petType));
     }
+    public String getPetType(int petType) {
+
+        return this.catalogs.get(petType).getPetType();
+    }
+
 
     public AppointmentItem getAppointmentItem(String petType, String size, String name) {
         return this.getCatalog(petType).getServices().stream()
@@ -58,10 +62,20 @@ public class CatalogService {
                 ));
     }
 
+    public AppointmentAddon getAppointmentAddon(String petType, String name){
+        return this.getCatalog(petType).getAddons().stream()
+                .filter(sa -> sa.name().equals(name))
+                .map(c -> new AppointmentAddon(c.name(), c.price(), 1))
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("No add on item found"));
+    }
     public AppointmentItem getAppointmentItem(String petType, String petSizing, int id) {
         ServiceItem serviceItem = this.getCatalog(petType).getServices().get(id);
         return new AppointmentItem(serviceItem.name(), serviceItem.price().get(petSizing), 1 );
     }
 
 
+    public List<Addons> getAddOnList(String petType) {
+        return  this.getCatalog(petType).getAddons();
+    }
 }

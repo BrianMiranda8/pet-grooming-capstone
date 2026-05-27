@@ -21,10 +21,10 @@ class CsvTransactionRepositoryTest {
         transaction.setOwnerEmail("brianmirandamontiel@gmail.com");
         transaction.setPetName("Clown");
         transaction.setOwnerName("Omar Miranda");
-        transaction.setItems(new AppointmentItem("test", 10.0, 1));
-        transaction.setItems(new AppointmentItem("tes 1", 10.0, 1));
-        transaction.setAddons(new AppointmentAddon("test", 10.0, 1));
-        transaction.setAddons(new AppointmentAddon("tes 2", 10.0, 1));
+        transaction.setItems("1",new AppointmentItem("test", 10.0, 1));
+        transaction.setItems("2",new AppointmentItem("tes 1", 10.0, 1));
+        transaction.setAddons("3",new AppointmentAddon("test", 10.0, 1));
+        transaction.setAddons("4",new AppointmentAddon("tes 2", 10.0, 1));
         csvTransactionRepository.save(transaction);
 
 
