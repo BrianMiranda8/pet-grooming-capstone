@@ -321,7 +321,7 @@ public class AppointmentController implements ControllerInterface {
             UI.showMessage(UI.createTitle("Checkout"));
             UI.showMessage(ConsoleColors.BLUE + "[1]" + ConsoleColors.RESET + " Checkout");
             UI.showMessage(ConsoleColors.BLUE + "[2]" + ConsoleColors.RESET + " View Cart");
-            UI.showMessage(ConsoleColors.BLUE + "[3]" + ConsoleColors.RESET + " Remove Items");
+//            UI.showMessage(ConsoleColors.BLUE + "[3]" + ConsoleColors.RESET + " Remove Items");
             UI.showMessage(ConsoleColors.BLUE + "[3]" + ConsoleColors.RESET + " Cancel");
 
             String userInput = UI.showPrompt("Select Option: ");

@@ -7,6 +7,6 @@ public record AppointmentItem(
 ) {
     @Override
     public String toString() {
-        return String.format("%-5d %-30s %-10s\n", quantity, name, "$"+price);
+        return String.format("%-5d %-30s $%-10.2f\n", quantity, name, price);
     }
 }

@@ -166,7 +166,7 @@ public class Transaction {
         StringBuilder title = new StringBuilder();
         StringBuilder sb = new StringBuilder();
 
-        title.append("The DogFather Groomer== \n");
+        title.append("The DogFather Groomer\n");
         title.append("----------------------\n");
         title.append(transactionDate.format(dtf)).append("\n");
         sb.append(petName).append(" | ");
@@ -181,7 +181,7 @@ public class Transaction {
         this.addons.values().forEach(addon -> sb.append(addon.toString()));
         sb.append("Extras: ").append("\n");
         this.extras.values().forEach(extra -> sb.append(extra.toString()));
-        sb.append(String.format("%-34s %-15s","Total:","$"+getTotal() )).append("\n");
+        sb.append(String.format("%-34s $%-15.2f","Total:",getTotal() )).append("\n");
 
         return sb.toString();
     }
@@ -198,7 +198,6 @@ public class Transaction {
         double extrasTotal = this.extras.values().stream()
                 .mapToDouble(x-> x.price() * x.quantity())
                 .sum();
-
         return itemsTotal + addonsTotal + extrasTotal;
     }
 }
