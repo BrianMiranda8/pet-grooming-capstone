@@ -15,7 +15,7 @@ public class MainController implements ControllerInterface {
 
         while (mainLoop) {
 
-            UI.showMessage(UI.createTitle("Welcome To Hippie Hounds Pet Grooming!"));
+            UI.showMessage(UI.createTitle("Welcome To The Dog Father!"));
             UI.showMessage(ConsoleColors.BLUE +"[1]" + ConsoleColors.RESET  + " Build Your Appointment" + ConsoleColors.RESET);
             UI.showMessage(ConsoleColors.BLUE +"[2]" + ConsoleColors.RESET  + " Combo Appointments" + ConsoleColors.RESET);
             UI.showMessage(ConsoleColors.BLUE +"[0]" + ConsoleColors.RESET  + " Cancel" + ConsoleColors.RESET);
@@ -24,6 +24,7 @@ public class MainController implements ControllerInterface {
             switch (response) {
                 case "1" -> appointmentController.displayScreen();
                 case "2" -> comboController.displayScreen();
+                case "0" -> mainLoop= false;
                 default -> UI.error("Wrong choice");
             }
 

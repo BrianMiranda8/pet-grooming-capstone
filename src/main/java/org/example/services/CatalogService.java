@@ -1,9 +1,6 @@
 package org.example.services;
 
-import org.example.entities.Addons;
-import org.example.entities.AppointmentAddon;
-import org.example.entities.AppointmentItem;
-import org.example.entities.ServiceItem;
+import org.example.entities.*;
 import org.example.interfaces.AnimalRepository;
 import org.example.models.Catalog;
 
@@ -50,6 +47,9 @@ public class CatalogService {
         return this.catalogs.get(petType).getPetType();
     }
 
+    public List<Extra> getExtras(String petType){
+        return this.getCatalog(petType).getExtras();
+    }
 
     public AppointmentItem getAppointmentItem(String petType, String size, String name) {
         return this.getCatalog(petType).getServices().stream()

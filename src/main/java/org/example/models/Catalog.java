@@ -1,7 +1,7 @@
 package org.example.models;
 
 import org.example.entities.Addons;
-import org.example.entities.Extras;
+import org.example.entities.Extra;
 import org.example.entities.ServiceItem;
 
 import java.util.List;
@@ -11,17 +11,17 @@ public class Catalog {
     List<ServiceItem> services;
     List<Addons> addons;
     List<String> availableSizing;
-    List<Extras> extras;
+    List<Extra> extras;
 
 
     Catalog() {
     }
 
-    public List<Extras> getExtras() {
+    public List<Extra> getExtras() {
         return extras;
     }
 
-    public void setExtras(List<Extras> extras) {
+    public void setExtras(List<Extra> extras) {
         this.extras = extras;
     }
 

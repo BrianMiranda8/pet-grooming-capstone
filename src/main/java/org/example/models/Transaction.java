@@ -2,6 +2,7 @@ package org.example.models;
 
 import org.example.entities.*;
 
+import java.security.KeyStoreException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -76,7 +77,7 @@ public class Transaction {
         return addons.containsKey(name);
     }
     public boolean containsExtra(String name) { return  extras.containsKey(name);}
-
+    public ExtraItem getExtras(String id){return extras.get(id);}
     public String getPetSizing() {
         return petSizing;
     }
@@ -111,12 +112,12 @@ public class Transaction {
         this.ownerEmail = ownerEmail;
     }
 
-    public void setExtra(String id, ExtraItem extraItem){
+    public void setExtra(String id, Extra extra){
         if (extras.containsKey(id)){
-            ExtraItem extra = extras.get(id);
-            extras.put(id, new ExtraItem(extra.name(), extra.price(), extra.quantity() + 1));
+            ExtraItem storeExtra = extras.get(id);
+            extras.put(id, new ExtraItem(extra.name(), extra.price(), storeExtra.quantity() + 1));
         }else{
-            extras.put(id, extraItem);
+            extras.put(id, new ExtraItem(extra.name(), extra.price(), 1));
         }
     }
 
@@ -140,6 +141,24 @@ public class Transaction {
     public void removeAddon(String id){
         this.addons.remove(id);
     }
+
+
+    public void removeExtra(String id) throws KeyStoreException {
+        if (!extras.containsKey(id)){
+            throw new KeyStoreException("Key not found");
+        }
+        if (extras.get(id).quantity() == 1){
+            extras.remove(id);
+            return;
+        }
+
+        if (extras.get(id).quantity() > 1){
+            ExtraItem current = extras.get(id);
+            extras.put(id, new ExtraItem(current.name(),current.price(), current.quantity()-1));
+        }
+
+
+    }
     @Override
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
@@ -147,7 +166,7 @@ public class Transaction {
         StringBuilder title = new StringBuilder();
         StringBuilder sb = new StringBuilder();
 
-        title.append("Hippy Hounds Receipt \n");
+        title.append("The DogFather Groomer== \n");
         title.append("----------------------\n");
         title.append(transactionDate.format(dtf)).append("\n");
         sb.append(petName).append(" | ");
@@ -160,6 +179,8 @@ public class Transaction {
         this.items.values().forEach(item -> sb.append(item.toString()));
         sb.append("Addons: ").append("\n");
         this.addons.values().forEach(addon -> sb.append(addon.toString()));
+        sb.append("Extras: ").append("\n");
+        this.extras.values().forEach(extra -> sb.append(extra.toString()));
         sb.append(String.format("%-34s %-15s","Total:","$"+getTotal() )).append("\n");
 
         return sb.toString();
@@ -174,6 +195,10 @@ public class Transaction {
                 .mapToDouble(AppointmentAddon::price)
                 .sum();
 
-        return itemsTotal + addonsTotal;
+        double extrasTotal = this.extras.values().stream()
+                .mapToDouble(x-> x.price() * x.quantity())
+                .sum();
+
+        return itemsTotal + addonsTotal + extrasTotal;
     }
 }
