@@ -9,46 +9,33 @@
     "services": [
       {
         "name": "Hair Cut",
-        "price": {
-          "small": 15.00,
-          "medium": 35.00,
-          "large": 50.00
-        }
+        "price": { "small": 15.00, "medium": 35.00, "large": 50.00 }
       },
       {
         "name": "Bath & Brush",
-        "price": {
-          "small": 20.00,
-          "medium": 30.00,
-          "large": 45.00
-        }
+        "price": { "small": 20.00, "medium": 30.00, "large": 45.00 }
       },
       {
         "name": "De-shedding Treatment",
-        "price": {
-          "small": 25.00,
-          "medium": 45.00,
-          "large": 65.00
-        }
+        "price": { "small": 25.00, "medium": 45.00, "large": 65.00 }
+      },
+      {
+        "name": "Dematting Therapy",
+        "price": { "small": 30.00, "medium": 50.00, "large": 70.00 }
       }
     ],
     "addons": [
-      {
-        "name": "Nail Trim",
-        "price": 10.00
-      },
-      {
-        "name": "Teeth Brushing",
-        "price": 12.00
-      },
-      {
-        "name": "Ear Cleaning",
-        "price": 8.00
-      },
-      {
-        "name": "Oatmeal Shampoo Upgrade",
-        "price": 5.00
-      }
+      { "name": "Nail Trim", "price": 10.00 },
+      { "name": "Teeth Brushing", "price": 12.00 },
+      { "name": "Ear Cleaning", "price": 8.00 },
+      { "name": "Oatmeal Shampoo Upgrade", "price": 5.00 }
+    ],
+    "extras": [
+      { "name": "Gourmet Peanut Butter Treats", "price": 6.50 },
+      { "name": "Prescription Skin & Coat Salmon Oil", "price": 14.00 },
+      { "name": "Frontline Flea & Tick Topical", "price": 18.50 },
+      { "name": "KONG Classic Durable Chew Toy", "price": 12.99 },
+      { "name": "Hypoallergenic Grain-Free Dry Food (1 lb Bag)", "price": 8.00 }
     ]
   },
   {
@@ -61,42 +48,110 @@
     "services": [
       {
         "name": "Hair Cut",
-        "price": {
-          "small": 15.00,
-          "medium": 35.00,
-          "large": 50.00
-        }
+        "price": { "small": 15.00, "medium": 35.00, "large": 50.00 }
       },
       {
         "name": "Bath & Brush",
-        "price": {
-          "small": 25.00,
-          "medium": 35.00,
-          "large": 45.00
-        }
+        "price": { "small": 25.00, "medium": 35.00, "large": 45.00 }
       },
       {
         "name": "Flea & Tick Bath",
-        "price": {
-          "small": 30.00,
-          "medium": 45.00,
-          "large": 55.00
-        }
+        "price": { "small": 30.00, "medium": 45.00, "large": 55.00 }
+      },
+      {
+        "name": "Mat Removal & Sanicap Trim",
+        "price": { "small": 20.00, "medium": 30.00, "large": 40.00 }
       }
     ],
     "addons": [
+      { "name": "Nail Trim", "price": 10.00 },
+      { "name": "Ear Cleaning", "price": 8.00 },
+      { "name": "Soft Claws Application", "price": 15.00 },
+      { "name": "Calming Diffuser Spray", "price": 6.00 }
+    ],
+    "extras": [
+      { "name": "Freeze-Dried Salmon Bites", "price": 7.00 },
+      { "name": "Hairball Control Paste Gel", "price": 9.50 },
+      { "name": "Advantage II Flea Prevention", "price": 19.00 },
+      { "name": "Organic Catnip Crinkle Toy", "price": 5.50 },
+      { "name": "Premium Wet Paté Variety Pack", "price": 11.00 }
+    ]
+  },
+  {
+    "petType": "Puppy / Kitten (Juvenile)",
+    "availableSizing": [
+      "small",
+      "medium"
+    ],
+    "services": [
       {
-        "name": "Nail Trim",
-        "price": 10.00
+        "name": "Introduction Water Acclimation",
+        "price": { "small": 12.00, "medium": 18.00 }
       },
       {
-        "name": "Ear Cleaning",
-        "price": 8.00
+        "name": "Puppy/Kitten Fluff Bath",
+        "price": { "small": 18.00, "medium": 25.00 }
       },
       {
-        "name": "Soft Claws Application",
-        "price": 15.00
+        "name": "Face & Paw Tidy Trim",
+        "price": { "small": 15.00, "medium": 22.00 }
+      },
+      {
+        "name": "Scent & Sensory Brush Out",
+        "price": { "small": 10.00, "medium": 15.00 }
       }
+    ],
+    "addons": [
+      { "name": "Baby Powder Cologne Mist", "price": 4.00 },
+      { "name": "Nail Filing / Dremel Intro", "price": 12.00 },
+      { "name": "Teeth Massaging Gel", "price": 7.00 },
+      { "name": "Tear Stain Removal Treatment", "price": 9.00 }
+    ],
+    "extras": [
+      { "name": "Soft Milk Chew Puppy Treats", "price": 5.00 },
+      { "name": "High-Calorie Growth Support Paste", "price": 13.50 },
+      { "name": "Kitten/Puppy Safe Flea Comb", "price": 6.00 },
+      { "name": "Plush Comfort Companion Toy", "price": 10.00 },
+      { "name": "High-Protein Growth Recipe Food", "price": 9.00 }
+    ]
+  },
+  {
+    "petType": "Senior (Special Care)",
+    "availableSizing": [
+      "small",
+      "medium",
+      "large"
+    ],
+    "services": [
+      {
+        "name": "Hydro-Massage Therapeutic Bath",
+        "price": { "small": 28.00, "medium": 38.00, "large": 50.00 }
+      },
+      {
+        "name": "Express Quick-Dry & Brush",
+        "price": { "small": 22.00, "medium": 32.00, "large": 42.00 }
+      },
+      {
+        "name": "Sanitary Trim & Pad Shave",
+        "price": { "small": 15.00, "medium": 20.00, "large": 28.00 }
+      },
+      {
+        "name": "Orthopedic Rest & Groom Session",
+        "price": { "small": 35.00, "medium": 45.00, "large": 60.00 }
+      }
+    ],
+    "addons": [
+      { "name": "Moisturizing Paw Balm Application", "price": 8.00 },
+      { "name": "CBD Calming Drops Drop-in", "price": 10.00 },
+      { "name": "Medicated Anti-Itch Soak", "price": 12.00 },
+      { "name": "Warm Towel Wrap Finish", "price": 6.00 }
+    ],
+    "extras": [
+      { "name": "Soft-Texture Glucosamine Joint Chews", "price": 15.00 },
+      { "name": "Dry Skin & Dander Therapy Spray", "price": 11.00 },
+      { "name": "Gentle Capstar Flea Pill", "price": 8.50 },
+      { "name": "Memory Foam Travel Crate Mat", "price": 24.99 },
+      { "name": "Easy-to-Digest Senior Wet Food Case", "price": 16.00 }
     ]
   }
 ]

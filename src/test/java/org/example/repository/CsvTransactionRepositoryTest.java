@@ -25,7 +25,8 @@ class CsvTransactionRepositoryTest {
         transaction.setItems("2",new AppointmentItem("tes 1", 10.0, 1));
         transaction.setAddons("3",new AppointmentAddon("test", 10.0, 1));
         transaction.setAddons("4",new AppointmentAddon("tes 2", 10.0, 1));
-        csvTransactionRepository.save(transaction);
+        IO.println(transaction);
+//        csvTransactionRepository.save(transaction);
 
 
     }

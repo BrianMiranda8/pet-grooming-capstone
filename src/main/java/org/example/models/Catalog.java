@@ -1,6 +1,7 @@
 package org.example.models;
 
 import org.example.entities.Addons;
+import org.example.entities.Extras;
 import org.example.entities.ServiceItem;
 
 import java.util.List;
@@ -10,9 +11,19 @@ public class Catalog {
     List<ServiceItem> services;
     List<Addons> addons;
     List<String> availableSizing;
+    List<Extras> extras;
 
 
-    Catalog() {}
+    Catalog() {
+    }
+
+    public List<Extras> getExtras() {
+        return extras;
+    }
+
+    public void setExtras(List<Extras> extras) {
+        this.extras = extras;
+    }
 
     public String getPetType() {
         return petType;

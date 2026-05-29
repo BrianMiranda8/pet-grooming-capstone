@@ -1,9 +1,6 @@
 package org.example.models;
 
-import org.example.entities.Addons;
-import org.example.entities.AppointmentAddon;
-import org.example.entities.AppointmentItem;
-import org.example.entities.ServiceItem;
+import org.example.entities.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +19,15 @@ public class Transaction {
     String petSizing;
     HashMap<String, AppointmentAddon> addons = new HashMap<>();
     HashMap<String, AppointmentItem> items = new HashMap<>();
+    HashMap<String, ExtraItem> extras = new HashMap<>();
+
+    private Transaction(String petName, String ownerName, String ownerEmail, String petType, String petSizing) {
+        this.petName = petName;
+        this.ownerName = ownerName;
+        this.ownerEmail = ownerEmail;
+        this.petType = petType;
+        this.petSizing = petSizing;
+    }
 
     public Transaction(String petName, String ownerName, String ownerEmail, HashMap<String,AppointmentAddon> addons, HashMap<String,AppointmentItem> items) {
         this.petName = petName;
@@ -32,6 +38,36 @@ public class Transaction {
 
     }
 
+    public Transaction() {
+    }
+
+    public static Transaction createBasicRefresh(String petName, String ownerName, String ownerEmail, String petType, String petSizing) {
+        Transaction tx = new Transaction(petName, ownerName, ownerEmail, petType, petSizing);
+        tx.items.put("SERV_BATH", new AppointmentItem("Bath & Brush", 30.00, 1));
+        tx.addons.put("ADD_NAIL", new AppointmentAddon("Nail Trim", 10.00, 1));
+        return tx;
+    }
+
+    public static Transaction createRoyalTreatment(String petName, String ownerName, String ownerEmail, String petType, String petSizing) {
+        Transaction tx = new Transaction(petName, ownerName, ownerEmail, petType, petSizing);
+        tx.items.put("SERV_CUT", new AppointmentItem("Hair Cut", 45.00, 1));
+        tx.items.put("SERV_BATH", new AppointmentItem("Bath & Brush", 30.00, 1));
+        tx.addons.put("ADD_TEETH", new AppointmentAddon("Teeth Brushing", 6.0, 1));
+        tx.addons.put("ADD_EAR", new AppointmentAddon("Ear Cleaning", 0.0, 1));
+        return tx;
+    }
+
+    public static Transaction createPremiumTreatment(String petName, String ownerName, String ownerEmail, String petType, String petSizing) {
+        Transaction tx = new Transaction(petName, ownerName, ownerEmail, petType, petSizing);
+        tx.items.put("SERV_DESHED", new AppointmentItem("Premium Bath", 50.00, 1));
+        tx.items.put("SERV_BATH", new AppointmentItem("Bath & Brush", 30.00, 1));
+        tx.addons.put("ADD_OATMEAL", new AppointmentAddon("Oatmeal Shampoo Upgrade", 0.0, 1));
+        tx.addons.put("ADD_NAIL", new AppointmentAddon("Nail Trim", 0.0, 1));
+        return tx;
+    }
+
+
+
     public boolean containsItem(String name){
         return items.containsKey(name);
     }
@@ -39,6 +75,7 @@ public class Transaction {
     public boolean containsAddon(String name){
         return addons.containsKey(name);
     }
+    public boolean containsExtra(String name) { return  extras.containsKey(name);}
 
     public String getPetSizing() {
         return petSizing;
@@ -56,15 +93,9 @@ public class Transaction {
         this.petType = petType;
     }
 
-    public Transaction() {
-    }
-
-
     public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
-
-
 
     public void setPetName(String petName) {
         this.petName = petName;
@@ -80,9 +111,17 @@ public class Transaction {
         this.ownerEmail = ownerEmail;
     }
 
+    public void setExtra(String id, ExtraItem extraItem){
+        if (extras.containsKey(id)){
+            ExtraItem extra = extras.get(id);
+            extras.put(id, new ExtraItem(extra.name(), extra.price(), extra.quantity() + 1));
+        }else{
+            extras.put(id, extraItem);
+        }
+    }
+
 
     public void setAddons(String id, AppointmentAddon addon) {
-        // todo fix this to add quantity
         this.addons.put(id,addon);
 
     }
@@ -121,7 +160,7 @@ public class Transaction {
         this.items.values().forEach(item -> sb.append(item.toString()));
         sb.append("Addons: ").append("\n");
         this.addons.values().forEach(addon -> sb.append(addon.toString()));
-        sb.append(String.format("%-34s %10.2f","Total:",getTotal() )).append("\n");
+        sb.append(String.format("%-34s %-15s","Total:","$"+getTotal() )).append("\n");
 
         return sb.toString();
     }

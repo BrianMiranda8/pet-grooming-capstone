@@ -4,6 +4,7 @@ import org.example.entities.Addons;
 import org.example.entities.AppointmentAddon;
 import org.example.entities.AppointmentItem;
 import org.example.entities.ServiceItem;
+import org.example.frontend.ConsoleColors;
 import org.example.frontend.UI;
 import org.example.interfaces.AnimalRepository;
 import org.example.interfaces.ControllerInterface;
@@ -51,29 +52,33 @@ public class AppointmentController implements ControllerInterface {
     }
 
     private void checkoutScreen(Transaction transaction, TransactionRepository transactionRepository) {
-        while (true) {
+        boolean exitCheckout = true;
+        while (exitCheckout) {
             UI.padding();
             UI.padding();
-            UI.showMessage("---------------Checkout---------------");
-            UI.padding();
-            UI.padding();
-
-            UI.showMessage("1) Checkout");
-            UI.showMessage("2) View Cart");
-            UI.showMessage("3) Cancel");
+            UI.showMessage(UI.createTitle("Checkout"));
+            UI.showMessage(ConsoleColors.BLUE+ "["+ "1]"+ConsoleColors.RESET+" Checkout");
+            UI.showMessage(ConsoleColors.BLUE+ "["+ "2]"+ConsoleColors.RESET+" View Cart");
+            UI.showMessage(ConsoleColors.BLUE+ "["+ "3]"+ConsoleColors.RESET+" Remove Items");
+            UI.showMessage(ConsoleColors.BLUE+ "["+ "3]"+ConsoleColors.RESET+" Cancel");
 
             String userInput = UI.showPrompt("Select Option: ");
             if (userInput.equals("1")) {
                 checkout(transaction, transactionRepository);
                 UI.showMessage("Thank You For Trusting Us With Your Pet!");
                 UI.showPrompt("Press Enter To Continue: ");
-                exitCondition("exit");
+                exitCheckout = false;
             } else if (userInput.equals("2")) {
+                UI.padding();
                 showCart(transaction);
+                UI.showPrompt("Press Enter To Continue: ");
+            } else if (userInput.isEmpty()) {
+                UI.showMessage("Enter Selection");
             } else {
-                exitCondition("exit");
+                exitCheckout = false;
             }
         }
+        exitCondition("exit");
     }
 
 
@@ -81,28 +86,32 @@ public class AppointmentController implements ControllerInterface {
         boolean isLooping = true;
         while (isLooping) {
             String title = UI.createTitle("Personal Information");
-
+            UI.padding();
+            UI.padding();
             UI.showMessage(title);
             String username = UI.showPrompt("Name: ");
             if (username.isEmpty()) {
-                UI.showMessage("Not a valid name");
+                UI.error("Not a valid name");
                 continue;
             }
             String petName = UI.showPrompt("Pet Name: ");
             if (petName.isEmpty()) {
-                UI.showMessage("Not a valid pet name");
+                UI.error("Not a valid pet name");
                 continue;
             }
 
-            String email = UI.showPrompt("Email: ");
-            if (email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                UI.showMessage("Not a valid email");
-                continue;
-            }
+            while(true) {
+                String email = UI.showPrompt("Email: ");
+                if (email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                    UI.error("Not a valid email");
+                    continue;
+                }
+                transaction.setOwnerEmail(email);
 
+                break;
+            }
             transaction.setOwnerName(username);
             transaction.setPetName(petName);
-            transaction.setOwnerEmail(email);
             break;
         }
     }
@@ -123,18 +132,19 @@ public class AppointmentController implements ControllerInterface {
 
     private void getAddons(List<Addons> addonsList, Transaction transaction, CatalogService catalogService) {
         while (true) {
-            UI.showMessage("");
-            UI.showMessage("");
-            UI.showMessage("Select Add ons or enter to continue");
+            UI.padding();
 
+            UI.showMessage(UI.createTitle("Select Add Ons"));
+            UI.showMessage( "Press Enter When done or if you dont need add Ons");
+            UI.showMessage(ConsoleColors.BG_RED+ ConsoleColors.BLACK + "Add a - sign to remove add on EX -0,-1" + ConsoleColors.RESET);
             for (int i = 0; i < addonsList.size(); i++) {
                 Addons addon = addonsList.get(i);
                 String selected = "";
                 if (transaction.containsAddon(Integer.toString(i))) {
-                    selected = "(Selected)";
+                    selected = ConsoleColors.GREEN + "(Selected)"+ ConsoleColors.RESET;
                 }
-
-                UI.showMessage(i + ") " + addon.name() + " $" + addon.price() + " " + selected);
+                String output = String.format(ConsoleColors.BLUE+ "[%d]"+ ConsoleColors.RESET+ " %-35s $%-5.2f %-5s", i, addon.name(),addon.price(),selected );
+                UI.showMessage(output);
 
             }
 
@@ -150,22 +160,24 @@ public class AppointmentController implements ControllerInterface {
 
 
             if (index > catalogService.getAddOnList(transaction.getPetType()).size()) {
-                UI.showMessage("Invalid service item");
+                UI.showMessage(ConsoleColors.BG_RED+ConsoleColors.WHITE + "Invalid service item" + ConsoleColors.RESET);
                 continue;
             }
 
             if (index > 0 && transaction.containsAddon(catalogService.getCatalog(transaction.getPetType()).getAddons().get(Math.abs(index)).name())) {
-                UI.showMessage("Service item already exists if you wish to delete pass it as a negative number EX: -1 ");
+                UI.showMessage(ConsoleColors.BG_RED+ConsoleColors.WHITE + "Service item already exists if you wish to delete pass it as a negative number EX: -1 " + ConsoleColors.RESET);
                 continue;
             }
 
 
-            if (index < 0 || userInput.equals("-0") && transaction.getItems().size() > index) {
+            // todo change this
+            if (index < 0 || userInput.equals("-0")) {
 
                 transaction.removeAddon(Integer.toString(index));
 
                 UI.padding();
                 UI.showMessage("Removed Add");
+
                 UI.padding();
 
             } else if (index >= 0) {
@@ -182,30 +194,33 @@ public class AppointmentController implements ControllerInterface {
         while (true) {
             UI.padding();
             UI.padding();
+            UI.showMessage(UI.createTitle("Select Services"));
+            UI.showMessage( "Press Enter When You are done selecting services");
+            UI.showMessage(ConsoleColors.BG_RED+ ConsoleColors.BLACK + "Add a - sign to remove selection EX -0,-1" + ConsoleColors.RESET);
 
-            UI.showMessage("Press Enter When You are done selecting services");
-            UI.showMessage("Add a - sign to remove selection EX -0,-1");
+
             for (int i = 0; i < serviceItems.size(); i++) {
 
                 String selected = "";
                 ServiceItem serviceItem = serviceItems.get(i);
                 if (transaction.containsItem(Integer.toString(i))) {
-                    selected = " (Selected) ";
+                    selected = ConsoleColors.GREEN + "(Selected)"+ ConsoleColors.RESET;
                 }
-                UI.showMessage(i + ") " + serviceItem.name() + " $" + serviceItem.price().get(transaction.getPetSizing()) + selected);
+                String output = String.format(ConsoleColors.BLUE+ "[%d]"+ ConsoleColors.RESET+ " %-35s $%-5.2f %-5s", i, serviceItem.name(),serviceItem.price().get(transaction.getPetSizing()),selected );
+                UI.showMessage(output);
             }
 
             String userInput = UI.showPrompt("Select service item: ");
             exitCondition(userInput);
             if (userInput.isEmpty() && !transaction.getItems().isEmpty()) {
-
+                // continue condition. If user input is empty and they have items selected
                 break;
 
-            } else if (transaction.getItems().isEmpty()) {
+            } else if (userInput.isEmpty() && transaction.getItems().isEmpty()) {
 
                 UI.showMessage("");
                 UI.showMessage("Please Select a service item");
-
+                continue;
             }
 
             int serviceItemId = Integer.parseInt(userInput);
@@ -221,10 +236,8 @@ public class AppointmentController implements ControllerInterface {
             }
 
 
-            if (serviceItemId < 0 || userInput.equals("-0") && transaction.getItems().size() > serviceItemId) {
-
+            if (serviceItemId < 0 || userInput.equals("-0") ) {
                 transaction.removeItem(Integer.toString(serviceItemId));
-                UI.showMessage("Removed Selected Item");
             } else if (serviceItemId >= 0) {
                 AppointmentItem appointmentItem = catalogService.getAppointmentItem(transaction.getPetType(), transaction.getPetSizing(), serviceItemId);
                 transaction.setItems(userInput, appointmentItem);
@@ -244,7 +257,7 @@ public class AppointmentController implements ControllerInterface {
 
             List<String> petSizelList = catalogService.getAvailableSizing(transaction.getPetType());
             for (int i = 0; i < petSizelList.size(); i++) {
-                UI.showMessage(i + ") " + petSizelList.get(i));
+                UI.showMessage(ConsoleColors.BLUE+"[" +i + "] "+ ConsoleColors.RESET + petSizelList.get(i));
             }
             try {
                 String userInput = UI.showPrompt("Select Pet Size: ");
@@ -269,7 +282,7 @@ public class AppointmentController implements ControllerInterface {
             List<String> petTypes = catalogService.getCatalogNames();
 
             for (int i = 0; i < petTypes.size(); i++) {
-                UI.showMessage(i + ") " + petTypes.get(i));
+                UI.showMessage(ConsoleColors.BLUE+"["+i + "] "+ ConsoleColors.RESET + petTypes.get(i));
             }
 
             try {
